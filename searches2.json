@@ -1,0 +1,40 @@
+[
+    {
+        "base url": "https://www.inter-west.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","PORTLAND"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "https://www.legacynw.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    }
+]

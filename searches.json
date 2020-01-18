@@ -1,0 +1,594 @@
+[
+    {
+        "base url": "https://www.propertymanagementportlandor.com",
+        "search url": "/portland-homes-for-rent#properties?beds=2&petOptionID=2",
+        "listing container": "li.listing-container",
+        "address": ["div","address"],
+        "rent": ["div","rentAmount"],
+        "beds": ["div","info"],
+        "sqft": ["div","sqft"],
+        "link": ["a","btn-listing"],
+        "img": ["style", "div.img[style]"]
+    }, 
+    {
+        "base url": "https://www.alpinepdx.com",
+        "search url": "/portland-homes-for-rent?keywordSearch=portland&rentMin=&rentMax=&beds=2&baths=&propertyTypeID=&petOptionID=2&sort=date%7Cdesc",
+        "listing container": "div.frsw-col-md-4 a",
+        "address": ["p","frsw-card-text"],
+        "rent": ["h3","frsw-card-title"],
+        "beds": "2+",
+        "link": "self",
+        "img": ["style", "div.frsw-card-image-box[style]"]
+    },
+    {
+        "base url": "https://www.propmhomes.com",
+        "search url": "/portland-homes-for-rent?keywordSearch=portland&rentMin=&rentMax=&beds=2&baths=&propertyTypeID=&petOptionID=2&sort=",
+        "listing container": "div.frsw-col-md-4 a",
+        "address": ["p","frsw-card-text"],
+        "rent": ["h3","frsw-card-title"],
+        "beds": "2+",
+        "link": "self",
+        "img": ["style", "div.frsw-card-image-box[style]"]
+    },
+    {
+        "base url": "https://www.kerrpropertiesinc.com",
+        "search url": "/portland-homes-for-rent?keywordSearch=portland&rentMin=&rentMax=&beds=2&baths=&propertyTypeID=&petOptionID=2&sort=",
+        "listing container": "div.frsw-col-md-4 a",
+        "address": ["p","frsw-card-text"],
+        "rent": ["h3","frsw-card-title"],
+        "beds": ["ul", "frsw-list-inline"],
+        "link": "self",
+        "img": ["style", "div.frsw-card-image-box[style]"]
+    },
+    {
+        "base url": "https://www.gordon-properties.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "https://www.portlandpm.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "https://jmre.appfolio.com",
+        "home url": "http://www.mcneeley.com",
+        "interact": {
+                        "search url": "/listings/?1578591793717",
+                        "open": "#filters > div.topbar.theme-color.js-top-bar > div.u-float-right > ul > li:nth-child(2) > a",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.listing-item__body > div > dl:first-child > dd",
+        "beds": "div.listing-item__body > div > dl:nth-child(3) > dd",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "h2.js-listing-title > a",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://gridpm.appfolio.com",
+        "home url": "https://www.gridpropertymanagement.com",
+        "interact": {
+                        "search url": "/listings?1578602805809",
+                        "open": "#filters > div.topbar.theme-color.js-top-bar > div.u-float-right > ul > li:nth-child(2) > a",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.js-listing-quick-facts > dl:nth-child(1) > dd",
+        "beds": "div.js-listing-quick-facts > dl:nth-child(3) > dd",
+        "sqft": "div.js-listing-quick-facts > dl:nth-child(2) > dd",
+        "link": "h2.js-listing-title > a",
+        "img": ["img src full link", "div.listing-item__image > img[src]"]
+    },
+    {
+        "base url": "https://milestonepropertymgmt.appfolio.com",
+        "home url": "https://www.milestonepm.net",
+        "interact": {
+                        "search url": "/listings?1578603575396",
+                        "open": "#filters > div.topbar.theme-color.js-top-bar > div.u-float-right > ul > li:nth-child(2) > a",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.listing-item__body > div > dl:first-child > dd",
+        "beds": "div.listing-item__body > div > dl:nth-child(3) > dd",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "h2.js-listing-title > a",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://fortresspm.appfolio.com",
+        "home url": "http://fortresspropertymgmt.com",
+        "interact": {
+                        "search url": "/listings?1578621682622",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://mainlander.appfolio.com",
+        "home url": "https://www.mainlander.com",
+        "interact": {
+                        "search url": "/listings?1578626123618",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://www.alderpropertymanagement.com",
+        "interact": {
+                        "search url": "/rental_listings",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "https://www.hollandprop.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "http://voss.appfolio.com",
+        "home url": "http://www.windermerevosspropertymanagement.com/home_rentals",
+        "interact": {
+                        "search url": "/listings?1578627281787",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://performance.appfolio.com",
+        "home url": "https://ppirentals.com/vacancies/",
+        "interact": {
+                        "search url": "/listings?1578627698686",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item.result.js-listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://www.criteriaproperties.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "http://realtymanagementadvisorsoforegon.appfolio.com",
+        "home url": "https://www.rmaoregon.com/search-rentals/",
+        "interact": {
+                        "search url": "/listings?1578628626749",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://tmgoregon.appfolio.com",
+        "home url": "https://tmgnorthwest.com/homes-oregon/",
+        "interact": {
+                        "search url": "/listings?1578628878547",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://illumepm.appfolio.com",
+        "home url": "https://www.illumepm.com/portland-homes-for-rent",
+        "interact": {
+                        "search url": "/listings?1578629110740",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://kjkpropertiespcpm.appfolio.com",
+        "home url": "https://kjkproperties.com/rentals/available-rentals/",
+        "interact": {
+                        "search url": "/listings?1579036081035",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://www.edgemgt.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "http://starmetro.appfolio.com",
+        "home url": "https://starmetro.com/available-rentals/",
+        "interact": {
+                        "search url": "/listings#",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://garciagrp.appfolio.com",
+        "home url": "https://www.garciagrp.com/available-properties",
+        "interact": {
+                        "search url": "/listings?1579045349782",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://starkfirs.appfolio.com",
+        "home url": "https://www.starkfirs.com/vacancies/",
+        "interact": {
+                        "search url": "/listings?1579045690624",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://rentportlandhomesprofessionals.appfolio.com",
+        "home url": "https://portlandrentalmanagement.com/rent-homes-portland-oregon/",
+        "interact": {
+                        "search url": "/listings?1579046391139",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://www.corepdxmgmt.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "http://gap.appfolio.com",
+        "home url": "https://gappm.com/vacancies/",
+        "interact": {
+                        "search url": "/listings?1579047345020",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://phcp.appfolio.com",
+        "home url": "https://www.portlandhomesllc.com/vacancies/",
+        "interact": {
+                        "search url": "/listings?1579047717835",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://www.bbpdx.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "http://peak.appfolio.com",
+        "home url": "https://www.peakpropertymgt.com/vacancies/",
+        "interact": {
+                        "search url": "/listings?1579049361619",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://egprop.appfolio.com",
+        "home url": "http://www.evergreenpropertymgmt.net/properties-for-rent.html",
+        "interact": {
+                        "search url": "/listings?1579049773714",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://www.inter-west.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","PORTLAND"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "https://www.legacynw.com",
+        "interact": {
+                        "search url": "/vacancies",
+                        "open": "div#filter-toggle",
+                        "petscheck": ["div#filter-pets","cats"],
+                        "typecheck": ["div#filter-type","residential"],
+                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
+                        "citycheck": ["div#filter-city","Portland"],
+                        "submit": ["link by id", "apply-filters"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["a", "apm-prop-thumb"],
+        "rent": ["h2", "rent"],
+        "beds": ["div", "beds"],
+        "sqft": ["div", "sqft"],
+        "link": ["a", "apm-view-details"],
+        "img": ["style", "div.photo[style]"]
+    }
+]

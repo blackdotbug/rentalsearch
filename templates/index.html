@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Heather's Cat Friendly Portland Rental Search</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <style>
+    .card-columns {
+      column-count: 3;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 12vh;
+      background-color: #f5f5f5;
+      text-align: center;
+      padding-top: 3vh;
+    }
+    a.btn.float-right {
+      margin: 1vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="header text-center">
+      <h1>Heather's Cat Friendly 2+ Bedroom Portland Rental Search</h1>
+    </div>
+    <div class="accordion" id="scrape_stats">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="float-left mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Last Scrape: {{scrapes[0].stamp}} | {{rentals|length}} listings</button>
+          </h4>
+          <a class="btn btn-primary btn-sm float-right" href="/scrape" role="button">Scrape All</a><a class="btn btn-primary btn-sm float-right" href="/map" role="button">Map Rentals</a>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#scrape_stats">
+          <div class="card-body">
+            <ul>
+            {% for scrape in scrapes %}
+              {% if scrape.stat is number %}
+              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} properties updated</li>
+              {% else %}
+              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a></li>
+              {% endif %}
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Display Results -->
+    <div class="row" id="properties" style="margin-top:80px;">
+      <div class="card-columns">
+        <form action="{{ url_for('compare') }}" method="post">
+        {% for listing in rentals|sort(attribute='value') %}
+          <div class="card text-center">
+            <img class="card-img-bottom" src="{{listing.img}}" alt="Card image">
+            <div class="card-body">
+              <h4 class="card-title">{{listing.address}}</h4></a>
+              <p class="card-text">${{listing.rent}}</p>
+              <p class="card-text">beds: {{listing.beds}}</p>
+              <p class="card-text">sq. ft.: {{listing.sqft}}</p>
+              {% if listing.value == -99 %}
+              <p class="card-text">cost per sq. ft.: unknown</p>
+              {% else %}
+              <p class="card-text">cost per sq. ft.: ${{listing.value}}</p>
+              {% endif %}
+              <a href="{{listing.link}}" class="btn btn-primary">See Listing</a>
+            </div>
+            <div class="card-footer">
+              <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="compare[]" id="compare{{loop.index}}">
+              <label class="form-check-label" for="compare{{loop.index}}">
+                Compare this property.
+              </label>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <footer class="footer">
+      <button type="submit" class="btn btn-primary">Compare Selected Properties</button>
+    </footer>
+    </form>
+
+  </div>
+</body>
+
+</html>
