@@ -8,6 +8,7 @@ import json
 import requests
 import re
 import scrape_properties
+from config import accessToken
 
 app = Flask(__name__)
 
@@ -63,7 +64,7 @@ def map_all():
         if 'lat' in row.keys():
             rental = {'address': row['address'], 'lat':row['lat'], 'lng':row['lng']}
             rentals.append(rental)
-    return render_template("map.html", rentals=rentals)
+    return render_template("map.html", rentals=rentals, accesstoken=accessToken)
 
 @app.route("/compare", methods=['GET', 'POST'])
 def compare():
@@ -106,8 +107,8 @@ def scrape_details(rental_urls):
             styled_detail = detail
             for word in keywords:
                 if re.search(rf'\b{word}\b', styled_detail, flags=re.IGNORECASE):
-                    styled_detail = styled_detail.replace(word, f"<b>{word}</b>")
-                # re.sub(rf'\b{word}\b', f'<b>{word}</b>', detail, flags=re.IGNORECASE)
+                    # styled_detail = styled_detail.replace(word, f"<b>{word}</b>")
+                    styled_detail = re.sub(rf'\b{word}\b', f'<b>{word}</b>', styled_detail, flags=re.IGNORECASE)
             deduped_details[i] = styled_detail
         listings_details[url] = deduped_details
     for listing in listings_details.keys():
