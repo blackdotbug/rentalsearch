@@ -43,7 +43,7 @@
           <h4 class="float-left mb-0">
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Last Scrape: {{scrapes[0].stamp}} | {{rentals|length}} listings</button>
           </h4>
-          <a class="btn btn-primary btn-sm float-right" href="/scrape" role="button">Scrape All</a><a class="btn btn-primary btn-sm float-right" href="/map" role="button">Map Rentals</a>
+          <a class="btn btn-primary btn-sm float-right" href="/scrape" role="button">Scrape All</a>
         </div>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#scrape_stats">
           <div class="card-body">
@@ -61,7 +61,7 @@
       </div>
     </div>
     <!-- Display Results -->
-    <div class="row" id="properties" style="margin-top:80px;">
+    <div class="row" id="properties" style="margin-top:80px;padding-bottom:80px">
       <div class="card-columns">
         <form action="{{ url_for('compare') }}" method="post">
         {% for listing in rentals|sort(attribute='value') %}
@@ -91,6 +91,7 @@
     </div>
     <footer class="footer">
       <button type="submit" class="btn btn-primary">Compare Selected Properties</button>
+      <!-- TO DO: Add button to view saved properties -->
     </footer>
     </form>
 

@@ -56,26 +56,30 @@ def scrape_one():
         scrapes.replace_one({'site':site}, {'site': site, 'stat': stat, 'stamp': now}, upsert=True)
     return redirect("/", code=302)
 
-@app.route("/map")
-def map_all():
-    data = mongo.db.rentals.find()
-    rentals = []
-    for row in data:
-        if 'lat' in row.keys():
-            rental = {'address': row['address'], 'lat':row['lat'], 'lng':row['lng']}
-            rentals.append(rental)
-    return render_template("map.html", rentals=rentals, accesstoken=accessToken)
+# @app.route("/map")
+# def map_all():
+#     data = mongo.db.rentals.find()
+#     rentals = []
+#     for row in data:
+#         if 'lat' in row.keys():
+#             rental = {'address': row['address'], 'lat':row['lat'], 'lng':row['lng']}
+#             rentals.append(rental)
+#     return render_template("map.html", rentals=rentals, accesstoken=accessToken)
 
 @app.route("/compare", methods=['GET', 'POST'])
 def compare():
     links = request.form.getlist('compare[]')
     details = scrape_details(links)
-    rentals = list(mongo.db.rentals.find({'link': {'$in': links}}))
+    rentals = list(mongo.db.rentals.find({'link': {'$in': links}}, {'_id': False}))
     for url,detail_list in details.items():
         for rental in rentals:
             if rental['link'] == url:
                 rental['details'] = detail_list
-    return render_template("compare.html", compare=rentals)
+    for rental in rentals:
+        rental['value'] = -99
+        if rental['rent'] and rental['sqft']:
+            rental['value'] = round(int(''.join(i for i in rental['rent'] if i.isdigit()))/int(''.join(i for i in rental['sqft'] if i.isdigit())),2)
+    return render_template("compare.html", compare=rentals, accesstoken=accessToken)
 
 def delete_listing(url):
     mongo.db.rentals.delete_one({'link':url})
@@ -97,7 +101,7 @@ def scrape_details(rental_urls):
                 deleted.append(url)
                 break
             else:
-                if tag.string and '/>' not in tag.string:
+                if tag.string and '/>' not in tag.string and 'rtCommonProps' not in tag.string:
                     for word in keywords:
                         # if word in tag.string.lower():
                         if re.search(rf'\b{word}\b', tag.string, flags=re.IGNORECASE):
@@ -115,6 +119,10 @@ def scrape_details(rental_urls):
         if listing in deleted:
             listings_details.pop(listing)
     return listings_details
+
+@app.route("/saved", methods=['GET', 'POST'])
+def saved_properties():
+    return render_template('saved.html')
 
 if __name__ == "__main__":
     app.run()

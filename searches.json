@@ -13,11 +13,11 @@
     {
         "base url": "https://www.alpinepdx.com",
         "search url": "/portland-homes-for-rent?keywordSearch=portland&rentMin=&rentMax=&beds=2&baths=&propertyTypeID=&petOptionID=2&sort=date%7Cdesc",
-        "listing container": "div.frsw-col-md-4 a",
+        "listing container": "div.frsw-col-md-4",
         "address": ["p","frsw-card-text"],
         "rent": ["h3","frsw-card-title"],
         "beds": "2+",
-        "link": "self",
+        "link": "a",
         "img": ["style", "div.frsw-card-image-box[style]"]
     },
     {

@@ -11,13 +11,20 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <style>
-    .card-columns {
-      column-count: 3;
-    }
-    .details li {
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
+  <style> 
+    ul.details li {
       font-size: smaller;
       text-align: left;
+    }
+    div#sidebar {
+      overflow: scroll;
+      height: 80vh;
     }
   </style>
 </head>
@@ -28,33 +35,66 @@
     <div class="header text-center">
         <a href="/"><h1>Heather's Cat Friendly 2+ Bedroom Portland Rental Search</h1></a>
     </div>
-    <!-- Display Results -->
-    <div class="row" id="properties" style="margin-top:80px;">
-      <div class="card-columns">
-        {% for rental in compare %}
-          <div class="card text-center">
-            <img class="card-img-bottom" src="{{rental.img}}" alt="Card image">
-            <div class="card-body">
-              <p class='card-text'><a href={{rental.link}}>{{rental.address}}</a></p>
-              <p class="card-text">{{rental.rent}}</p>
-              <p class="card-text">beds: {{rental.beds}}</p>
-              <p class="card-text">sq. ft.: {{rental.sqft}}</p>
-              <ul class="details">
-              {% if rental.details|length > 0 %}
-              {% for detail in rental.details %}
-              <li>{{detail | safe}}</li>
-              {% endfor %}
-              {% else %}
-              <li>no keywords found</li>
-              {% endif %}
-              </ul>
-            </div>
-          </div>
-        {% endfor %}
+    
+    <div class="row">
+      <div class="col-md-8">
+        <h4>Comparing {{compare|length}} Listings</h4>
+        <!-- Display Map -->
+        <div id="map" style="height: 70vh;"></div>
+      </div>
+      <div class="col-md-4">
+        <!-- Display Results -->
+        <div id="sidebar"></div>
       </div>
     </div>
-
+    <!-- TO DO: add checkbox form for updating listing with keywords present and update sqft if needed -->
   </div>
+  <script>
+    var map = L.map('map').setView([45.523064, -122.676483], 10)
+    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        maxZoom: 20,
+        id: "mapbox.streets",
+        accessToken: "{{accesstoken}}"
+    }).addTo(map);
+    {% for listing in compare %}
+    L.marker([{{listing.lat}}, {{listing.lng}}]).bindPopup(popupContent({{listing|tojson}})).addTo(map);
+    {% endfor %}
+    function popupContent(listing) {
+      return '<a href='+listing['link']+'>'+listing['address']+'</a> ($'+listing['rent']+')';
+    }
+    function updateSidebar(listing) {
+      var sidebar = document.getElementById("sidebar");
+      sidebar.innerHTML = '<img src='+listing['img']+' style="max-width:300px" />'+
+                          '<a href="'+listing['link']+'"><h3>'+listing['address']+'</h3></a>'+
+                          '<p>$'+listing['rent']+'</p>'+
+                          '<p>beds: '+listing['beds']+'</p>'+
+                          '<p>sq. ft.: '+listing['sqft']+'</p>';
+      if (listing.value == -99) {
+        sidebar.innerHTML += '<p>cost per sq. ft.: unknown</p>';
+      }
+      else {
+        sidebar.innerHTML += '<p>cost per sq. ft.: $'+listing['value']+'</p>';
+      }
+      // console.log(listing['details']);
+      sidebar.innerHTML += '<ul class="details">';
+      for (var i = 0; i < listing['details'].length; i++) {
+        sidebar.innerHTML += '<li>'+listing['details'][i]+'</li>';
+      }
+      sidebar.innerHTML += '</ul>';
+    }
+    map.on('popupopen', function(e) {
+      console.log(e);
+      var popupLat = e.popup._latlng['lat'];
+      var popupLng = e.popup._latlng['lng'];
+      {% for listing in compare %}
+        if ({{listing.lat}} == popupLat && {{listing.lng}} == popupLng) {
+          updateSidebar({{listing|tojson}});
+        }
+      {% endfor %}
+    });
+  </script>
+  
 </body>
 
 </html>
