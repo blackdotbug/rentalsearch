@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Heather's Cat Friendly Portland Rental Search</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="/static/rentals.css">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -17,16 +17,6 @@
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
   crossorigin=""></script>
-  <style> 
-    ul.details li {
-      font-size: smaller;
-      text-align: left;
-    }
-    div#sidebar {
-      overflow: scroll;
-      height: 80vh;
-    }
-  </style>
 </head>
 
 <body>
@@ -48,6 +38,31 @@
       </div>
     </div>
     <!-- TO DO: add checkbox form for updating listing with keywords present and update sqft if needed -->
+    <div class="row">
+      <div id="updateProp">
+        <form action="{{ url_for('update_properties') }}" method="post" id="update_form">
+          <span class="formGroup">Parking: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="garage" name="parking" id="garage">garage</label>
+          <label class="form-radio-label"><input class="form-radio-input" type="radio" value="off-street" name="parking" id="off-street">off-street</label>
+          <label class="form-radio-label"><input class="form-radio-input" type="radio" value="street" name="parking" id="street">street</label></span>
+          <span class="formGroup">Laundry: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="in-unit" name="laundry" id="in-unit">in-unit</label>
+          <label class="form-radio-label"><input class="form-radio-input" type="radio" value="hookups" name="laundry" id="hookups">hookups</label>
+          <label class="form-radio-label"><input class="form-radio-input" type="radio" value="on-site" name="laundry" id="on-site">on-site</label></span>
+          <br /><span class="formGroup"><input class="form-check-input" type="checkbox" value="dishwasher" name="dishwasher" id="dishwasher">
+          <label class="form-check-label" for="dishwasher">dishwasher</label>
+          <input class="form-check-input" type="checkbox" value="gasoven" name="gasoven" id="gasoven">
+          <label class="form-check-label" for="gasoven">gas oven</label>
+          <input class="form-check-input" type="checkbox" value="fireplace" name="fireplace" id="fireplace">
+          <label class="form-check-label" for="fireplace">fireplace</label>
+          <input class="form-check-input" type="checkbox" value="transit" name="transit" id="transit">
+          <label class="form-check-label" for="transit">transit</label></span>
+          <label class="form-text-label" for="sqft">sq.ft.</label>
+          <input class="form-text-input" type="number" name="sqft" id="sqft">
+          <input type="hidden" name="address" id="address" value="" />
+          <input type="hidden" name="listings" id="listings" value='{{compare|tojson}}' />
+          <button type="submit" class="btn btn-primary float-right">Update Property</button>
+        </form>
+      </div>
+    </div>
   </div>
   <script>
     var map = L.map('map').setView([45.523064, -122.676483], 10)
@@ -64,6 +79,17 @@
       return '<a href='+listing['link']+'>'+listing['address']+'</a> ($'+listing['rent']+')';
     }
     function updateSidebar(listing) {
+      document.getElementById("update_form").reset();
+      var input_address = document.getElementById("address");
+      input_address.value = listing['address'];
+      if (listing['user_update']){
+        Object.entries(listing['user_update']).forEach(function([key, value]) {
+          document.getElementById(value).checked = true;
+        }); 
+      }
+      if (listing['sqft']){
+        document.getElementById('sqft').value = listing['sqft'];
+      }
       var sidebar = document.getElementById("sidebar");
       sidebar.innerHTML = '<img src='+listing['img']+' style="max-width:300px" />'+
                           '<a href="'+listing['link']+'"><h3>'+listing['address']+'</h3></a>'+
@@ -84,7 +110,7 @@
       sidebar.innerHTML += '</ul>';
     }
     map.on('popupopen', function(e) {
-      console.log(e);
+      // console.log(e);
       var popupLat = e.popup._latlng['lat'];
       var popupLng = e.popup._latlng['lng'];
       {% for listing in compare %}

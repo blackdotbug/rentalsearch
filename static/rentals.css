@@ -1,0 +1,53 @@
+.card-columns {
+    column-count: 3;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 12vh;
+    background-color: #f5f5f5;
+    text-align: center;
+    padding-top: 3vh;
+}
+a.btn.btn-sm {
+    margin: 1vh;
+}
+.hide {
+    display:none !important;
+}
+form#filter_form span.formGroup {
+    margin: 0 2vh;
+    display: inline-block;
+}
+form#filter_form button.float-right {
+    margin-left: 2vh;
+}
+ul.details li {
+    font-size: smaller;
+    text-align: left;
+}
+div#sidebar {
+    overflow: scroll;
+    height: 80vh;
+}
+form#filter_form, form#update_form {
+    width: 85vw;
+}
+span.formGroup {
+    margin: 0 2vh;
+    display: inline-block;
+}
+input.form-radio-input, input.form-check-input {
+    margin: 1vh;
+}
+label.form-check-label {
+    padding-left: 4vh;
+}
+button.float-right {
+    margin-top: -3vh;
+}
+/* form#update_form button.float-right {
+    margin: 0 2vh;
+} */
