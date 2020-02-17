@@ -39,6 +39,8 @@ def index():
 
     if not session.get("compare") is None:
         session.pop("compare", None)
+    if not session.get("calculate") is None:
+        session.pop("calculate", None)
     return render_template("index.html", rentals=rentals, scrapes=scrapes)
 
 @app.route("/scrape")
@@ -49,10 +51,12 @@ def scrape():
     rental_data,scrape_stats = scrape_properties.scrape_all()
     for address, rental in rental_data.items():
         if rental['address']:
-            current = rentals.find_one({"address":rental['address']})
-            if current['user_update']:
+            current = rentals.find_one({"address":address})
+            if current and 'user_update' in current.keys():
                 rental['user_update'] = current['user_update']
-            rentals.replace_one({"address":rental['address']}, rental, upsert=True)
+            if current and rental['sqft'] == '' and type(current['sqft']) == int:
+                rental['sqft'] = current['sqft']
+            rentals.replace_one({"address":address}, rental, upsert=True)
     for site, stat in scrape_stats.items():
         scrapes.replace_one({'site':site}, {'site': site, 'stat': stat, 'stamp': now}, upsert=True)
     return redirect("/", code=302)
@@ -67,12 +71,66 @@ def scrape_one():
     for address, rental in rental_data.items():
         if rental['address']:
             current = rentals.find_one({"address":address})
-            if current['user_update']:
+            if current and 'user_update' in current.keys():
                 rental['user_update'] = current['user_update']
+            if current and rental['sqft'] == '' and type(current['sqft']) == int:
+                rental['sqft'] = current['sqft']
             rentals.replace_one({"address":address}, rental, upsert=True)
     for site, stat in scrape_stats.items():
         scrapes.replace_one({'site':site}, {'site': site, 'stat': stat, 'stamp': now}, upsert=True)
     return redirect("/", code=302)
+
+@app.route("/calculate", methods=['GET', 'POST'])
+def calculate():
+    if not session.get("calculate") is None:
+        rentals = session.get("calculate")
+    else:
+        links = request.form.getlist("calculate[]")
+        numbers = scrape_numbers(links)
+        rentals = list(mongo.db.rentals.find({'link': {'$in': links}}, {'_id': False}))
+        for url,numbers_list in numbers.items():
+            for rental in rentals:
+                if rental['link'] == url:
+                    rental['numbers'] = numbers_list
+        session['calculate'] = rentals
+        session.modified == True
+    print(rentals)
+    return render_template("calculate.html", calculate=rentals)
+
+def scrape_numbers(rental_urls):
+    executable_path = {"executable_path": CHROMEDRIVER}
+    browser = Browser("chrome", **executable_path, headless=True)
+    listings_numbers = {}
+    for url in rental_urls:
+        browser.visit(url)
+        html = browser.html
+        soup = BeautifulSoup(html, "html.parser")
+        numbers = []
+        deleted = []
+        keywords = ['deposit','fee','pet rent']
+        text = ["The page you are looking for can not be found","Sorry, the listing you are trying to access is no longer available.","We're sorry, but this listing is no longer on the market."]
+        for tag in soup.descendants:
+            if tag.string and any(sorry in tag.string for sorry in text):
+                delete_listing(url)
+                deleted.append(url)
+                break
+            else:
+                if tag.string and '/>' not in tag.string and 'rtCommonProps' not in tag.string:
+                    for word in keywords:
+                        if re.search(rf'\b{word}\b', tag.string, flags=re.IGNORECASE):
+                            numbers.append(tag.string)
+        deduped_numbers = list(set(numbers))
+        for i,number in enumerate(deduped_numbers):
+            styled_number = number
+            for word in keywords:
+                if re.search(rf'\b{word}\b', styled_number, flags=re.IGNORECASE):
+                    styled_number = re.sub(rf'\b{word}\b', f'<b>{word}</b>', styled_number, flags=re.IGNORECASE)
+            deduped_numbers[i] = styled_number.strip()
+        listings_numbers[url] = deduped_numbers
+    for listing in listings_numbers.keys():
+        if listing in deleted:
+            listings_numbers.pop(listing)
+    return listings_numbers
 
 @app.route("/compare", methods=['GET', 'POST'])
 def compare():
@@ -98,7 +156,7 @@ def compare():
                 rental['value'] = round(int(''.join(i for i in rental['rent'] if i.isdigit()))/int(''.join(i for i in rental['sqft'] if i.isdigit())),2)
         session['compare'] = rentals
         session.modified = True
-    print(rentals)
+    # print(rentals)
     return render_template("compare.html", compare=rentals, accesstoken=accessToken)
 
 def delete_listing(url):
@@ -130,8 +188,9 @@ def scrape_details(rental_urls):
         details = []
         deleted = []
         keywords = ['dishwasher', 'fireplace', 'garage', 'off-street parking', 'off street parking', 'shed', 'basement', 'storage', 'gas stove', 'gas oven', 'gas range', 'hookups', 'washer/dryer', 'W/D', 'laundry', 'transit', 'bus', 'trimet']
+        text = ["The page you are looking for can not be found","Sorry, the listing you are trying to access is no longer available.","We're sorry, but this listing is no longer on the market."]
         for tag in soup.descendants:
-            if tag.string and 'no longer available' in tag.string:
+            if tag.string and any(sorry in tag.string for sorry in text):
                 delete_listing(url)
                 deleted.append(url)
                 break
@@ -162,7 +221,7 @@ def update_properties():
     for value in updates:
         if value in keys:
             user_updates[value] = updates[value]
-        elif value == 'sqft':
+        elif value == 'sqft' and updates['sqft']:
             sqft = int(updates['sqft'])
     if sqft > 0:    
         mongo.db.rentals.update_one({'address':updates['address']}, {'$set' : {'user_update': user_updates, 'sqft': sqft}})
@@ -183,13 +242,21 @@ def clean():
     executable_path = {"executable_path": CHROMEDRIVER}
     browser = Browser("chrome", **executable_path, headless=True)
     rentals = list(mongo.db.rentals.find())
-    listings = {}
+    # listings = {}
     for rental in rentals:
         browser.visit(rental['link'])
-        text = "Sorry, the listing you are trying to access is no longer available."
-        present = browser.is_text_present(text, wait_time=5)
+        text = ["The page you are looking for can not be found","Sorry, the listing you are trying to access is no longer available.","We're sorry, but this listing is no longer on the market."]
+        present = browser.is_text_present(text[0], wait_time=5)
         if present == True:
             delete_listing(rental['link'])
+        else:
+            present = browser.is_text_present(text[1], wait_time=5)
+            if present == True:
+                delete_listing(rental['link'])
+            else:
+                present = browser.is_text_present(text[2], wait_time=5)
+                if present == True:
+                    delete_listing(rental['link'])
         # else: 
         #     INVISIBLE_ELEMS = ('style', 'script', 'head', 'title')
         #     RE_SPACES = re.compile(r'\s{3,}')
@@ -204,7 +271,17 @@ def clean():
     
 @app.route("/saved", methods=['GET', 'POST'])
 def saved_properties():
-    return render_template('saved.html')
+    updates = request.form
+    addresses = updates.getlist("address")
+    adjrents = updates.getlist("adjrent")
+    moveins = updates.getlist("movein")
+    saved = updates.getlist("saved")
+    for i,address in enumerate(addresses):
+        save = False
+        if i+1 in saved:
+            save = True
+        mongo.db.rentals.update_one({'address':address}, {'$set' : {'adjrent': adjrents[i], 'movein': moveins[i], 'save': save}})
+    return render_template('saved.html', saved=list(updates))
 
 if __name__ == "__main__":
     app.run()

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Heather's Cat Friendly Portland Rental Search</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/rentals.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+</head>
+  <body>
+    <div class="container">
+
+        <div class="header text-center">
+            <a href="/"><h1>Heather's Cat Friendly 2+ Bedroom Portland Rental Search</h1></a>
+        </div>
+    <form action="{{url_for('saved_properties')}}" method="POST">    
+        <table id="caltable" data-toggle="table" data-detail-view="true" data-detail-formatter="detailFormatter" data-select-item-name="saved" data-id-field="id">
+        <thead>
+            <tr>
+            <th data-field="id">ID</th>
+            <th data-field="address">address</th>
+            <th data-field="rent">rent</th>
+            <th data-field="petrent">pet rent</th>
+            <th data-field="appfee">app fee</th>
+            <th data-field="secdep">sec deposit</th>
+            <th data-field="petdep">pet deposit</th>
+            <th data-field="adjrent">adjusted rent</th>
+            <th data-field="movein">total move-in</th>
+            <th data-field="save" data-checkbox="true"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for listing in calculate %}
+            <tr id="row{{loop.index}}">
+            <td>{{loop.index}}</td>
+            <td><a href="{{listing.link}}">{{listing.address}}</a><input type="hidden" value="{{listing.address}}" name="address" /></td>
+            <td id="row{{loop.index}}rent" class="row{{loop.index}}">{{listing.rent}}</td>
+            <td><input type="number" value=0 id="row{{loop.index}}petrent" class="row{{loop.index}}"/></td>
+            <td><input type="number" value=0 id="row{{loop.index}}appfee" class="row{{loop.index}}"/></td>
+            <td><input type="number" value=0 id="row{{loop.index}}secdep" class="row{{loop.index}}"/></td>
+            <td><input type="number" value=0 id="row{{loop.index}}petdep" class="row{{loop.index}}"/></td>
+            <td><input type="number" value=0 id="row{{loop.index}}adjrent" name="adjrent" class="row{{loop.index}}"/></td>
+            <td><input type="number" value=0 id="row{{loop.index}}movein" name="movein" class="row{{loop.index}}"/></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Update and Save</button>
+    </form>
+    </div>
+    <script>
+        var listings = [];
+        {% for listing in calculate %}
+        listings.push({{listing.numbers|safe}}.join('</li><li>'));
+        {% endfor %}
+
+        function detailFormatter(index, row) {
+          var html = '<ul><li>'+listings[index]+'</li></ul>';
+          return html
+        }
+
+        document.addEventListener("DOMContentLoaded", function(){
+          document.getElementById("caltable").addEventListener("keyup", function(e) {
+            var trow = e.target.closest("tr").id;
+            var rowels = document.getElementsByClassName(trow);
+            var rent = rowels.namedItem(trow+"rent").innerHTML;
+            var petrent = rowels.namedItem(trow+"petrent").value;
+            var adjrent = parseInt(rent)+parseInt(petrent);
+            var appfee = rowels.namedItem(trow+"appfee").value;
+            var secdep = rowels.namedItem(trow+"secdep").value;
+            var petdep = rowels.namedItem(trow+"petdep").value;
+            var movein = (2*parseInt(appfee))+parseInt(secdep)+parseInt(petdep)+adjrent;
+            rowels.namedItem(trow+"adjrent").value = adjrent;
+            rowels.namedItem(trow+"movein").value = movein;
+          });
+        });
+
+    </script>
+  </body>
+</html>

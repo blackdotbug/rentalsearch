@@ -73,6 +73,18 @@ def scrape_site(site, browser):
         soup = BeautifulSoup(html, "html.parser")
         listings = soup.select(site['listing container'])
         for listing in listings:
+            skip = False
+            if "cat text" in site.keys():
+                skip = True
+                find_cats = listing.select_one(site["cat text"][0])
+                if find_cats:
+                    for li in find_cats.descendants:
+                        if li.string and site["cat text"][1] in li.string:
+                            skip = False
+                            break
+            if skip == True:
+                break
+
             address = ""
             if "address" in site.keys():
                 find_address = listing.find(site['address'][0], class_=site['address'][1])
@@ -172,7 +184,7 @@ def scrape_site(site, browser):
             else: 
                 scrape_stats[site['base url']] = "no properties found"
         
-        # return rentals, scrape_stats 
+        return rentals, scrape_stats 
 
     except Exception as e:
         print(e)

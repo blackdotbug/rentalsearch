@@ -590,5 +590,102 @@
         "sqft": ["div", "sqft"],
         "link": ["a", "apm-view-details"],
         "img": ["style", "div.photo[style]"]
+    },
+    {
+        "base url": "https://twentyfourseven.appfolio.com",
+        "home url": "https://247prop.com/rentals/",
+        "interact": {
+                        "search url": "/listings?1581467789809",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://rentportlandhomesdarlaandrewsoffice.appfolio.com",
+        "home url": "https://portlandrentalhomes.com/homes-for-rent/",
+        "interact": {
+                        "search url": "/listings?1581468328780",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://showmojo.com",
+        "search url": "/1f532f6043/listings/mapsearch?cities=Portland%2C+OR&bedrooms=2",
+        "home url": "https://www.realpmsolutions.com/houses-rent",
+        "listing container": "div.main-box-content",
+        "address": ["div","address"],
+        "rent": ["li","rent"],
+        "beds": ["li","br"],
+        "link": ["a","schedule-a-showing"],
+        "img": ["img src full link", "div.picture img[src]"],
+        "cat text": ["ul.options", "Cats ok"]
+    },
+    {
+        "base url": "https://pdx4rent.appfolio.com",
+        "home url": "https://pdx4rent.appfolio.com/listings/",
+        "interact": {
+                        "search url": "/listings",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "http://www.firstclassportland.com",
+        "home url": "http://www.firstclassportland.com/vacancies/",
+        "interact": {
+                        "search url": "/vacancies",
+                        "catselect": ["#ttFilterPets","cats"],
+                        "bedselect": ["#ttFilterBeds","2"],
+                        "cityselect": ["#ttFilterCity","PORTLAND"],
+                    },
+        "listing container": "div.tt-rental-row",
+        "address": ["span", "rental-address"],
+        "rent": ["span", "rental-rent"],
+        "beds": ["span", "rental-beds"],
+        "link": "div.tt-col2 > h4 > a",
+        "img": ["img src full link", "a.rental-photo img[src]"]
+    },
+    {
+        "base url": "http://showmojo.com",
+        "search url": "/5731f53012/listings/mapsearch?cities=Portland%2C+OR&bedrooms=2",
+        "home url": "https://www.livingroomre.com/rent/",
+        "listing container": "div.main-box-content",
+        "address": ["div","address"],
+        "rent": ["li","rent"],
+        "beds": ["li","br"],
+        "link": ["a","schedule-a-showing"],
+        "img": ["img src full link", "div.picture img[src]"],
+        "cat text": ["ul.options", "Cats ok"]
     }
 ]

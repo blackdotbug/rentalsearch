@@ -48,6 +48,9 @@ label.form-check-label {
 button.float-right {
     margin-top: -3vh;
 }
+table#caltable input {
+    max-width: 90px;
+}
 /* form#update_form button.float-right {
     margin: 0 2vh;
 } */

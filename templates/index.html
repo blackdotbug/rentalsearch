@@ -68,7 +68,7 @@
     <!-- Display Results -->
     <div class="row container-fluid" id="properties" style="margin-top:80px;padding-bottom:80px">
       <div class="card-columns">
-        <form action="{{ url_for('compare') }}" method="post">
+        <form id="comparecalculate" method="post">
         {% for listing in rentals|sort(attribute='value') %}
           <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% endif %}
           ">
@@ -87,17 +87,17 @@
             </div>
             <div class="card-footer">
               <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="compare[]" id="compare{{loop.index}}">
-              <label class="form-check-label" for="compare{{loop.index}}">
-                Compare this property.
-              </label>
+              <label class="form-check-label" for="compare{{loop.index}}">Compare</label> | 
+              <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="calculate[]" id="calculate{{loop.index}}">
+              <label class="form-check-label" for="calculate{{loop.index}}">Calculate</label>
             </div>
           </div>
         {% endfor %}
       </div>
     </div>
     <footer class="footer">
-      <button type="submit" class="btn btn-primary">Compare Selected Properties</button>
-      <!-- TO DO: Add button to view saved properties -->
+      <button type="submit" id="compare" class="btn btn-primary" form="comparecalculate" formaction="{{url_for('compare')}}">Compare Selected Properties</button>
+      <button type="submit" id="calculate" class="btn btn-primary" form="comparecalculate" formaction="{{url_for('calculate')}}">Calculate Selected Properties</button>
     </footer>
     </form>
 

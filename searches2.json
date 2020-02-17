@@ -1,40 +1,76 @@
 [
     {
-        "base url": "https://www.inter-west.com",
-        "interact": {
-                        "search url": "/vacancies",
-                        "open": "div#filter-toggle",
-                        "petscheck": ["div#filter-pets","cats"],
-                        "typecheck": ["div#filter-type","residential"],
-                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
-                        "citycheck": ["div#filter-city","PORTLAND"],
-                        "submit": ["link by id", "apply-filters"]
-                    },
-        "listing container": "div.listing-item",
-        "address": ["a", "apm-prop-thumb"],
-        "rent": ["h2", "rent"],
-        "beds": ["div", "beds"],
-        "sqft": ["div", "sqft"],
-        "link": ["a", "apm-view-details"],
-        "img": ["style", "div.photo[style]"]
+        "base url": "http://showmojo.com",
+        "search url": "/5731f53012/listings/mapsearch?cities=Portland%2C+OR&bedrooms=2",
+        "home url": "https://www.livingroomre.com/rent/",
+        "listing container": "div.main-box-content",
+        "address": ["div","address"],
+        "rent": ["li","rent"],
+        "beds": ["li","br"],
+        "link": ["a","schedule-a-showing"],
+        "img": ["img src full link", "div.picture img[src]"],
+        "cat text": ["ul.options", "Cats ok"]
     },
     {
-        "base url": "https://www.legacynw.com",
+        "base url": "http://showmojo.com",
+        "search url": "/76753ef0e2/listings/mapsearch?cities=Portland%2C+OR&bedrooms=2",
+        "home url": "http://www.foxmanagementinc.com/portland-homes-for-rent",
+        "listing container": "div.main-box-content",
+        "address": ["div","address"],
+        "rent": ["li","rent"],
+        "beds": ["li","br"],
+        "link": ["a","schedule-a-showing"],
+        "img": ["img src full link", "div.picture img[src]"],
+        "cat text": ["ul.options", "Cats ok"]
+    },
+    {
+        "base url": "http://showmojo.com",
+        "search url": "/85ab338078/listings/mapsearch?cities=Portland%2C+OR&bedrooms=2",
+        "home url": "https://www.bluestonehockley.com/available-rentals/",
+        "listing container": "div.main-box-content",
+        "address": ["div","address"],
+        "rent": ["li","rent"],
+        "beds": ["li","br"],
+        "link": ["a","schedule-a-showing"],
+        "img": ["img src full link", "div.picture img[src]"],
+        "cat text": ["ul.options", "Cats ok"]
+    },
+    {
+        "base url": "https://tindell.appfolio.com",
+        "home url": "https://tindellandcompany.com/vacancies/",
         "interact": {
-                        "search url": "/vacancies",
-                        "open": "div#filter-toggle",
-                        "petscheck": ["div#filter-pets","cats"],
-                        "typecheck": ["div#filter-type","residential"],
-                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
-                        "citycheck": ["div#filter-city","Portland"],
-                        "submit": ["link by id", "apply-filters"]
+                        "search url": "/listings?1581607395970",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
                     },
         "listing container": "div.listing-item",
-        "address": ["a", "apm-prop-thumb"],
-        "rent": ["h2", "rent"],
-        "beds": ["div", "beds"],
-        "sqft": ["div", "sqft"],
-        "link": ["a", "apm-view-details"],
-        "img": ["style", "div.photo[style]"]
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
+    },
+    {
+        "base url": "https://rarebird.appfolio.com",
+        "home url": "https://rarebirdproperties.com/available-rentals/",
+        "interact": {
+                        "search url": "/listings?1581608984413",
+                        "open": "a.js-filter-button",
+                        "catselect": ["filters[cats]","Cats allowed"],
+                        "bedselect": ["filters[bedrooms]","2"],
+                        "cityselect": ["filters[cities][]","Portland"],
+                        "submit": ["find by css", "input.filter-form-button"]
+                    },
+        "listing container": "div.listing-item",
+        "address": ["span", "js-listing-address"],
+        "rent": "div.sidebar__price.rent-banner__text.js-listing-blurb-rent",
+        "beds": "span.rent-banner__text.js-listing-blurb-bed-bath",
+        "sqft": "div.listing-item__body > div > dl:nth-child(2) > dd",
+        "link": "div.listing-item__actions.js-listing-actions > a.js-link-to-detail",
+        "img": ["img src full link", "img.listing-item__image[src]"]
     }
 ]
