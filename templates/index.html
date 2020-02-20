@@ -47,6 +47,7 @@
     </div>
     <div id="filterProp" class="row">
       <form id="filter_form">
+        <div id="filter-inputs">
         <span class="formGroup">Parking: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="garage" name="parking" id="garage">garage</label>
         <label class="form-radio-label"><input class="form-radio-input" type="radio" value="off-street" name="parking" id="off-street">off-street</label>
         <label class="form-radio-label"><input class="form-radio-input" type="radio" value="street" name="parking" id="street">street</label></span>
@@ -60,9 +61,14 @@
         <input class="form-check-input" type="checkbox" value="fireplace" name="fireplace" id="fireplace">
         <label class="form-check-label" for="fireplace">fireplace</label>
         <input class="form-check-input" type="checkbox" value="transit" name="transit" id="transit">
-        <label class="form-check-label" for="transit">transit</label></span>
+        <label class="form-check-label" for="transit">transit</label>
+        <input class="form-check-input" type="checkbox" value="saved" name="saved" id="saved">
+        <label class="form-check-label" for="saved">saved</label></span>
+        </div>
+        <div id="filter-btns">
         <a id="reset_filter" class="btn btn-primary float-right btn-sm" onclick="reset_filter(); return false;">Reset</a>
         <a id="filter_cards" class="btn btn-primary float-right btn-sm" onclick="filter_cards(); return false;">Filter</a>
+        </div>
       </form>
     </div>
     <!-- Display Results -->
@@ -70,12 +76,16 @@
       <div class="card-columns">
         <form id="comparecalculate" method="post">
         {% for listing in rentals|sort(attribute='value') %}
-          <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% endif %}
+          <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% endif %}{% if listing.save == True %} bg-info saved {% endif %}
           ">
             <img class="card-img-bottom" src="{{listing.img}}" alt="Card image">
             <div class="card-body">
               <h4 class="card-title">{{listing.address}}</h4></a>
+              {% if listing.adjrent %}
+              <p class="card-text">${{listing.adjrent}}/${{listing.movein}}</p>
+              {% else %}
               <p class="card-text">${{listing.rent}}</p>
+              {% endif %}
               <p class="card-text">beds: {{listing.beds}}</p>
               <p class="card-text">sq. ft.: {{listing.sqft}}</p>
               {% if listing.value == -99 %}

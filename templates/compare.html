@@ -76,7 +76,11 @@
     L.marker([{{listing.lat}}, {{listing.lng}}]).bindPopup(popupContent({{listing|tojson}})).addTo(map);
     {% endfor %}
     function popupContent(listing) {
-      return '<a href='+listing['link']+'>'+listing['address']+'</a> ($'+listing['rent']+')';
+      if (listing['adjrent']) {
+        var rent = '$'+listing['adjrent']+'/$'+listing['movein']
+      }
+      else { var rent = '$'+listing['rent'] }
+      return '<a href='+listing['link']+'>'+listing['address']+'</a> ('+rent+')';
     }
     function updateSidebar(listing) {
       document.getElementById("update_form").reset();
@@ -92,10 +96,12 @@
       }
       var sidebar = document.getElementById("sidebar");
       sidebar.innerHTML = '<img src='+listing['img']+' style="max-width:300px" />'+
-                          '<a href="'+listing['link']+'"><h3>'+listing['address']+'</h3></a>'+
-                          '<p>$'+listing['rent']+'</p>'+
-                          '<p>beds: '+listing['beds']+'</p>'+
-                          '<p>sq. ft.: '+listing['sqft']+'</p>';
+                          '<a href="'+listing['link']+'"><h3>'+listing['address']+'</h3></a>';
+      if (listing['adjrent']){ 
+        sidebar.innerHTML += '<p>$'+listing['adjrent']+'/$'+listing['movein']+'</p>';
+      }
+      else { sidebar.innerHTML += '<p>$'+listing['rent']+'</p>'; }
+      sidebar.innerHTML += '<p>beds: '+listing['beds']+'</p><p>sq. ft.: '+listing['sqft']+'</p>';
       if (listing.value == -99) {
         sidebar.innerHTML += '<p>cost per sq. ft.: unknown</p>';
       }

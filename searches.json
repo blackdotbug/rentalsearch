@@ -667,7 +667,7 @@
                         "search url": "/vacancies",
                         "catselect": ["#ttFilterPets","cats"],
                         "bedselect": ["#ttFilterBeds","2"],
-                        "cityselect": ["#ttFilterCity","PORTLAND"],
+                        "cityselect": ["#ttFilterCity","PORTLAND"]
                     },
         "listing container": "div.tt-rental-row",
         "address": ["span", "rental-address"],

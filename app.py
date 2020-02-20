@@ -94,7 +94,7 @@ def calculate():
                     rental['numbers'] = numbers_list
         session['calculate'] = rentals
         session.modified == True
-    print(rentals)
+    # print(rentals)
     return render_template("calculate.html", calculate=rentals)
 
 def scrape_numbers(rental_urls):
@@ -278,10 +278,11 @@ def saved_properties():
     saved = updates.getlist("saved")
     for i,address in enumerate(addresses):
         save = False
-        if i+1 in saved:
+        if str(i+1) in saved:
             save = True
         mongo.db.rentals.update_one({'address':address}, {'$set' : {'adjrent': adjrents[i], 'movein': moveins[i], 'save': save}})
-    return render_template('saved.html', saved=list(updates))
+    # return render_template('saved.html', saved=list(updates))
+    return redirect("/", code=302)
 
 if __name__ == "__main__":
     app.run()

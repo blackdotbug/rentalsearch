@@ -51,6 +51,12 @@ button.float-right {
 table#caltable input {
     max-width: 90px;
 }
-/* form#update_form button.float-right {
-    margin: 0 2vh;
-} */
+div#filter-inputs {
+    width: 75vw;
+    float: left;
+}
+div#filter-btns {
+    width: 10vw;
+    float: right;
+    margin: 3vh 0;
+}
