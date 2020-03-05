@@ -90,6 +90,8 @@ def scrape_site(site, browser):
                 find_address = listing.find(site['address'][0], class_=site['address'][1])
                 if find_address:
                     address = find_address.get_text().replace('\t', '').replace('\n','')
+                    if any(x in address.lower() for x in ['gresham','wilsonville','sherwood', 'beaverton', 'tigard', 'oswego', 'hillsboro']):
+                        break
                     if address.find(", Portland, OR") > 0:
                         address = address[0:address.rfind(", Portland, OR")]
                     elif address.find("Portland, OR") > 0:
@@ -155,9 +157,9 @@ def scrape_site(site, browser):
                     if find_img:
                         img = find_img['src']
 
+            lat = 45.523064
+            lng = -122.676483
             coords = geocode(address)
-            lat = 0
-            lng = 0
             if coords:
                 lat = coords['lat']
                 lng = coords['lng']

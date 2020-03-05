@@ -34,6 +34,7 @@ div#sidebar {
 }
 form#filter_form, form#update_form {
     width: 85vw;
+    margin: 1vh auto;
 }
 span.formGroup {
     margin: 0 2vh;
@@ -59,4 +60,10 @@ div#filter-btns {
     width: 10vw;
     float: right;
     margin: 3vh 0;
+}
+div#properties {
+    margin: 5vh auto 20vh;
+}
+div#filterProp {
+    margin: 0;
 }

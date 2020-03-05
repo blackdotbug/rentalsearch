@@ -47,6 +47,9 @@
           <span class="formGroup">Laundry: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="in-unit" name="laundry" id="in-unit">in-unit</label>
           <label class="form-radio-label"><input class="form-radio-input" type="radio" value="hookups" name="laundry" id="hookups">hookups</label>
           <label class="form-radio-label"><input class="form-radio-input" type="radio" value="on-site" name="laundry" id="on-site">on-site</label></span>
+          <span class="formGroup">Type: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="apt" name="type" id="apt">apt</label>
+          <label class="form-radio-label"><input class="form-radio-input" type="radio" value="plex" name="type" id="plex">plex</label>
+          <label class="form-radio-label"><input class="form-radio-input" type="radio" value="house" name="type" id="house">house</label></span>
           <br /><span class="formGroup"><input class="form-check-input" type="checkbox" value="dishwasher" name="dishwasher" id="dishwasher">
           <label class="form-check-label" for="dishwasher">dishwasher</label>
           <input class="form-check-input" type="checkbox" value="gasoven" name="gasoven" id="gasoven">
@@ -57,6 +60,8 @@
           <label class="form-check-label" for="transit">transit</label></span>
           <label class="form-text-label" for="sqft">sq.ft.</label>
           <input class="form-text-input" type="number" name="sqft" id="sqft">
+          <label class="form-text-label" for="rent">rent</label>
+          <input class="form-text-input" type="number" name="rent" id="rent">
           <input type="hidden" name="address" id="address" value="" />
           <input type="hidden" name="listings" id="listings" value='{{compare|tojson}}' />
           <button type="submit" class="btn btn-primary float-right">Update Property</button>
@@ -93,6 +98,9 @@
       }
       if (listing['sqft']){
         document.getElementById('sqft').value = listing['sqft'];
+      }
+      if (listing['rent']){
+        document.getElementById('rent').value = listing['rent'];
       }
       var sidebar = document.getElementById("sidebar");
       sidebar.innerHTML = '<img src='+listing['img']+' style="max-width:300px" />'+

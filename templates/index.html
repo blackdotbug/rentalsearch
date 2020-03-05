@@ -35,9 +35,10 @@
             <ul>
             {% for scrape in scrapes %}
               {% if scrape.stat is number %}
-              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} properties updated <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a></li>
+              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} properties updated <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a> | <a href="/remove-scrape?url={{scrape.site}}" class="badge">Remove</a></li>
               {% else %}
-              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a></li>
+              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a> | <a href="/remove-scrape?url={{scrape.site}}" class="badge">Remove</a>
+              </li>
               {% endif %}
             {% endfor %}
             </ul>
@@ -54,6 +55,9 @@
         <span class="formGroup">Laundry: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="in-unit" name="laundry" id="in-unit">in-unit</label>
         <label class="form-radio-label"><input class="form-radio-input" type="radio" value="hookups" name="laundry" id="hookups">hookups</label>
         <label class="form-radio-label"><input class="form-radio-input" type="radio" value="on-site" name="laundry" id="on-site">on-site</label></span>
+        <span class="formGroup">Type: <label class="form-radio-label"><input class="form-radio-input" type="radio" value="apt" name="type" id="apt">apt</label>
+        <label class="form-radio-label"><input class="form-radio-input" type="radio" value="plex" name="type" id="plex">plex</label>
+        <label class="form-radio-label"><input class="form-radio-input" type="radio" value="house" name="type" id="house">house</label></span>
         <span class="formGroup"><input class="form-check-input" type="checkbox" value="dishwasher" name="dishwasher" id="dishwasher">
         <label class="form-check-label" for="dishwasher">dishwasher</label>
         <input class="form-check-input" type="checkbox" value="gasoven" name="gasoven" id="gasoven">
@@ -72,11 +76,11 @@
       </form>
     </div>
     <!-- Display Results -->
-    <div class="row container-fluid" id="properties" style="margin-top:80px;padding-bottom:80px">
+    <div class="row container-fluid" id="properties">
       <div class="card-columns">
-        <form id="comparecalculate" method="post">
+        <form id="update" method="post">
         {% for listing in rentals|sort(attribute='value') %}
-          <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% endif %}{% if listing.save == True %} bg-info saved {% endif %}
+          <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% if listing.user_update.type %} {{listing.user_update.type}} {% endif %}{% endif %}{% if listing.save == True %} bg-info saved {% endif %}
           ">
             <img class="card-img-bottom" src="{{listing.img}}" alt="Card image">
             <div class="card-body">
@@ -96,18 +100,18 @@
               <a href="{{listing.link}}" class="btn btn-primary">See Listing</a>
             </div>
             <div class="card-footer">
-              <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="compare[]" id="compare{{loop.index}}">
-              <label class="form-check-label" for="compare{{loop.index}}">Compare</label> | 
-              <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="calculate[]" id="calculate{{loop.index}}">
-              <label class="form-check-label" for="calculate{{loop.index}}">Calculate</label>
+              <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="update[]" id="update{{loop.index}}">
+              <label class="form-check-label" for="update{{loop.index}}">Select Property</label>
             </div>
           </div>
         {% endfor %}
       </div>
     </div>
     <footer class="footer">
-      <button type="submit" id="compare" class="btn btn-primary" form="comparecalculate" formaction="{{url_for('compare')}}">Compare Selected Properties</button>
-      <button type="submit" id="calculate" class="btn btn-primary" form="comparecalculate" formaction="{{url_for('calculate')}}">Calculate Selected Properties</button>
+      <button type="submit" id="compare" class="btn btn-primary" form="update" formaction="{{url_for('compare')}}">Compare</button>
+      <button type="submit" id="calculate" class="btn btn-primary" form="update" formaction="{{url_for('calculate')}}">Calculate</button>
+      <button type="submit" id="delete" class="btn btn-primary" form="update" formaction="{{url_for('delete_many')}}">Delete</button>
+      <button type="submit" id="toggle" class="btn btn-primary" form="update" formaction="{{url_for('toggle_save')}}">Save/Unsave</button>
     </footer>
     </form>
 
