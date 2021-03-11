@@ -1,0 +1,26 @@
+beautifulsoup4 @ file:///home/linux1/recipes/ci/beautifulsoup4_1610988766420/work
+brotlipy==0.7.0
+cachelib==0.1.1
+certifi==2020.12.5
+cffi @ file:///opt/concourse/worker/volumes/live/48a8e59c-d46a-476e-668b-0a7bcc9c0827/volume/cffi_1613246931795/work
+chardet @ file:///opt/concourse/worker/volumes/live/8264bbc9-7371-481f-419c-a9d31a09238b/volume/chardet_1607706837238/work
+click @ file:///home/linux1/recipes/ci/click_1610990599742/work
+cryptography @ file:///opt/concourse/worker/volumes/live/14a07fdb-8d19-4701-4d00-9bb2c85ce3e2/volume/cryptography_1613401432260/work
+Flask @ file:///home/ktietz/src/ci/flask_1611932660458/work
+Flask-PyMongo==2.3.0
+Flask-Session==0.3.2
+idna @ file:///home/linux1/recipes/ci/idna_1610986105248/work
+itsdangerous==1.1.0
+Jinja2 @ file:///tmp/build/80754af9/jinja2_1612213139570/work
+MarkupSafe==1.1.1
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pymongo==3.11.3
+pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1608057966937/work
+PySocks @ file:///opt/concourse/worker/volumes/live/286ddfa9-f2fd-40b3-4c68-b14dbfd7c9fa/volume/pysocks_1605305809963/work
+requests @ file:///tmp/build/80754af9/requests_1608241421344/work
+selenium==3.141.0
+six @ file:///opt/concourse/worker/volumes/live/5839b2d2-7415-4ff0-4c61-c4cddf798f7c/volume/six_1605205320479/work
+soupsieve @ file:///tmp/build/80754af9/soupsieve_1614023247537/work
+splinter==0.14.0
+urllib3 @ file:///tmp/build/80754af9/urllib3_1611694770489/work
+Werkzeug @ file:///home/ktietz/src/ci/werkzeug_1611932622770/work

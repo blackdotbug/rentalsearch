@@ -23,7 +23,9 @@
       <div class="card">
         <div class="card-header">
           <h4 class="float-left mb-0">
+            {% if scrapes|length > 0 %}
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Last Scrape: {{scrapes[0].stamp}} | {{rentals|length}} listings</button>
+            {% endif %}
           </h4>
           <div class="float-right">
             <a class="btn btn-primary btn-sm" href="/scrape" role="button">Scrape All</a>
@@ -33,14 +35,16 @@
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#scrape_stats">
           <div class="card-body">
             <ul>
-            {% for scrape in scrapes %}
-              {% if scrape.stat is number %}
-              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} properties updated <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a> | <a href="/remove-scrape?url={{scrape.site}}" class="badge">Remove</a></li>
-              {% else %}
-              <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a> | <a href="/remove-scrape?url={{scrape.site}}" class="badge">Remove</a>
-              </li>
-              {% endif %}
-            {% endfor %}
+            {% if scrapes|length > 0 %}
+              {% for scrape in scrapes %}
+                {% if scrape.stat is number %}
+                <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} properties updated <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a> | <a href="/remove-scrape?url={{scrape.site}}" class="badge">Remove</a></li>
+                {% else %}
+                <li><a href={{scrape.site}}>{{scrape.site}}</a>: {{scrape.stat}} <a href="/scrape-one?url={{scrape.site}}" class="badge">Retry</a> | <a href="/remove-scrape?url={{scrape.site}}" class="badge">Remove</a>
+                </li>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
             </ul>
           </div>
         </div>
@@ -70,8 +74,8 @@
         <label class="form-check-label" for="saved">saved</label></span>
         </div>
         <div id="filter-btns">
-        <a id="reset_filter" class="btn btn-primary float-right btn-sm" onclick="reset_filter(); return false;">Reset</a>
-        <a id="filter_cards" class="btn btn-primary float-right btn-sm" onclick="filter_cards(); return false;">Filter</a>
+        <a id="reset_filter" class="btn btn-primary btn-sm" onclick="reset_filter(); return false;">Reset</a>
+        <a id="filter_cards" class="btn btn-primary btn-sm" onclick="filter_cards(); return false;">Filter</a>
         </div>
       </form>
     </div>
@@ -79,32 +83,34 @@
     <div class="row container-fluid" id="properties">
       <div class="card-columns">
         <form id="update" method="post">
-        {% for listing in rentals|sort(attribute='value') %}
-          <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% if listing.user_update.type %} {{listing.user_update.type}} {% endif %}{% endif %}{% if listing.save == True %} bg-info saved {% endif %}
-          ">
-            <img class="card-img-bottom" src="{{listing.img}}" alt="Card image">
-            <div class="card-body">
-              <h4 class="card-title">{{listing.address}}</h4></a>
-              {% if listing.adjrent %}
-              <p class="card-text">${{listing.adjrent}}/${{listing.movein}}</p>
-              {% else %}
-              <p class="card-text">${{listing.rent}}</p>
-              {% endif %}
-              <p class="card-text">beds: {{listing.beds}}</p>
-              <p class="card-text">sq. ft.: {{listing.sqft}}</p>
-              {% if listing.value == -99 %}
-              <p class="card-text">cost per sq. ft.: unknown</p>
-              {% else %}
-              <p class="card-text">cost per sq. ft.: ${{listing.value}}</p>
-              {% endif %}
-              <a href="{{listing.link}}" class="btn btn-primary">See Listing</a>
+        {% if rentals|length > 0 %}
+          {% for listing in rentals|sort(attribute='value') %}
+            <div class="card listing text-center {% if listing.user_update %}{% if listing.user_update.dishwasher %} {{listing.user_update.dishwasher}} {% endif %}{% if listing.user_update.gasoven %} {{listing.user_update.gasoven}} {% endif %}{% if listing.user_update.transit %} {{listing.user_update.transit}} {% endif %}{% if listing.user_update.fireplace %} {{listing.user_update.fireplace}} {% endif %}{% if listing.user_update.parking %} {{listing.user_update.parking}} {% endif %}{% if listing.user_update.laundry %} {{listing.user_update.laundry}} {% endif %}{% if listing.user_update.type %} {{listing.user_update.type}} {% endif %}{% endif %}{% if listing.save == True %} bg-info saved {% endif %}
+            ">
+              <img class="card-img-bottom" src="{{listing.img}}" alt="Card image">
+              <div class="card-body">
+                <h4 class="card-title">{{listing.address}}</h4></a>
+                {% if listing.adjrent %}
+                <p class="card-text">${{listing.adjrent}}/${{listing.movein}}</p>
+                {% else %}
+                <p class="card-text">${{listing.rent}}</p>
+                {% endif %}
+                <p class="card-text">beds: {{listing.beds}}</p>
+                <p class="card-text">sq. ft.: {{listing.sqft}}</p>
+                {% if listing.value == -99 %}
+                <p class="card-text">cost per sq. ft.: unknown</p>
+                {% else %}
+                <p class="card-text">cost per sq. ft.: ${{listing.value}}</p>
+                {% endif %}
+                <a href="{{listing.link}}" class="btn btn-primary">See Listing</a>
+              </div>
+              <div class="card-footer">
+                <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="update[]" id="update{{loop.index}}">
+                <label class="form-check-label" for="update{{loop.index}}">Select Property</label>
+              </div>
             </div>
-            <div class="card-footer">
-              <input class="form-check-input" type="checkbox" value="{{listing.link}}" name="update[]" id="update{{loop.index}}">
-              <label class="form-check-label" for="update{{loop.index}}">Select Property</label>
-            </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
     <footer class="footer">

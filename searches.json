@@ -9,7 +9,7 @@
         "sqft": ["div","sqft"],
         "link": ["a","btn-listing"],
         "img": ["style", "div.img[style]"]
-    }, 
+    },
     {
         "base url": "https://www.alpinepdx.com",
         "search url": "/portland-homes-for-rent?keywordSearch=portland&rentMin=&rentMax=&beds=2&baths=&propertyTypeID=&petOptionID=2&sort=date%7Cdesc",
@@ -197,10 +197,10 @@
         "interact": {
                         "search url": "/vacancies",
                         "open": "div#filter-toggle",
-                        "petscheck": ["div#filter-pets","cats"],
-                        "typecheck": ["div#filter-type","residential"],
-                        "bedscheck": ["div#filter-beds","beds-2", "beds-3"],
-                        "citycheck": ["div#filter-city","Portland"],
+                        "petscheck": ["div#pets-dropdown","cats"],
+                        "typecheck": ["div#type-dropdown","residential"],
+                        "bedscheck": ["div#beds-dropdown","beds-2", "beds-3"],
+                        "citycheck": ["div#city-dropdown","Portland"],
                         "submit": ["link by id", "apply-filters"]
                     },
         "listing container": "div.listing-item",

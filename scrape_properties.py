@@ -1,9 +1,9 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
 from time import sleep
-import json 
+import json
 import requests
-from config import apikey, CHROMEDRIVER
+from config import apikey
 
 def geocode(address):
     address = address.replace(" ", "+")
@@ -18,7 +18,7 @@ def geocode(address):
 def scrape_site(site, browser):
     scrape_stats = {}
     rentals = {}
-    try: 
+    try:
         base_url = site['base url']
         if "interact" in site.keys():
             search_url = site['interact']['search url']
@@ -62,13 +62,13 @@ def scrape_site(site, browser):
                 if browser.is_text_present("All available listings", wait_time=2):
                     scrape_stats[site['home url']] = "filtering failed, site skipped"
 
-        else: 
+        else:
             search_url = site['search url']
             browser.visit(base_url + search_url)
-        
+
         if browser.is_element_present_by_css('div#result_container.is-loading', wait_time=2):
             sleep(1)
-        
+
         html = browser.html
         soup = BeautifulSoup(html, "html.parser")
         listings = soup.select(site['listing container'])
@@ -102,7 +102,7 @@ def scrape_site(site, browser):
             if "rent" in site.keys():
                 find_rent = ""
                 if type(site['rent']) == str:
-                    find_rent = listing.select_one(site['rent'])  
+                    find_rent = listing.select_one(site['rent'])
                 else:
                     find_rent = listing.find(site['rent'][0], class_=site['rent'][1])
                 if find_rent:
@@ -123,7 +123,7 @@ def scrape_site(site, browser):
                         beds = find_beds
                     else:
                         beds = find_beds.get_text()
-                    
+
             sqft = ""
             if "sqft" in site.keys():
                 find_sqft = ""
@@ -183,23 +183,22 @@ def scrape_site(site, browser):
         else:
             if len(rentals) > 0:
                 scrape_stats[site['base url']] = len(rentals)
-            else: 
+            else:
                 scrape_stats[site['base url']] = "no properties found"
-        
-        return rentals, scrape_stats 
+
+        return rentals, scrape_stats
 
     except Exception as e:
         print(e)
         if 'home url' in site.keys():
             if len(scrape_stats) == 0:
                 scrape_stats[site['home url']] = "something went wrong, site skipped"
-        else: 
+        else:
             scrape_stats[site['base url']] = "something went wrong, site skipped"
         return rentals, scrape_stats
 
 def scrape_all(home_url = 'all'):
-    executable_path = {"executable_path": CHROMEDRIVER}
-    browser = Browser("chrome", **executable_path, headless=False)
+    browser = Browser("chrome", headless=False)
 
     rentals = {}
 
@@ -213,7 +212,7 @@ def scrape_all(home_url = 'all'):
                     rentals.update(site_rentals)
                 else:
                     if ('home url' in site.keys() and site['home url'] == home_url) or site['base url'] == home_url:
-                        browser = Browser("chrome", **executable_path, headless=True)
+                        browser = Browser("chrome", headless=True)
                         site_rentals, site_scrape_stats = scrape_site(site, browser)
                         scrape_stats.update(site_scrape_stats)
                         rentals.update(site_rentals)

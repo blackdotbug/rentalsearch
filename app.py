@@ -1,15 +1,15 @@
-from flask import Flask, render_template, redirect, request, jsonify, url_for, session 
+from flask import Flask, render_template, redirect, request, jsonify, url_for, session
 from flask_session import Session
 from flask_pymongo import PyMongo
 import datetime
 from splinter import Browser
 from bs4 import BeautifulSoup
 from time import sleep
-import json 
+import json
 import requests
 import re
 import scrape_properties
-from config import accessToken, SECRETKEY, MONGOURI, SESSTYPE, MONGODB, ENV, CHROMEDRIVER
+from config import accessToken, SECRETKEY, MONGOURI, SESSTYPE, MONGODB, ENV
 import sys
 
 sys.setrecursionlimit(8000)
@@ -116,8 +116,7 @@ def calculate():
     return render_template("calculate.html", calculate=rentals)
 
 def scrape_numbers(rental_urls):
-    executable_path = {"executable_path": CHROMEDRIVER}
-    browser = Browser("chrome", **executable_path, headless=True)
+    browser = Browser("chrome", headless=True)
     listings_numbers = {}
     for url in rental_urls:
         browser.visit(url)
@@ -181,8 +180,7 @@ def delete_listing(url):
     mongo.db.rentals.delete_one({'link':url})
 
 def get_sqft(url):
-    executable_path = {"executable_path": CHROMEDRIVER}
-    browser = Browser("chrome", **executable_path, headless=True)
+    browser = Browser("chrome", headless=True)
     browser.visit(url)
     text = ['sqft', 'sq. ft.', 'sq ft', 'square footage', 'sq.ft.']
     html = browser.html
@@ -196,8 +194,7 @@ def get_sqft(url):
     return sqfts
 
 def scrape_details(rental_urls):
-    executable_path = {"executable_path": CHROMEDRIVER}
-    browser = Browser("chrome", **executable_path, headless=True)
+    browser = Browser("chrome", headless=True)
     listings_details = {}
     for url in rental_urls:
         browser.visit(url)
@@ -241,11 +238,11 @@ def update_properties():
             user_updates[value] = updates[value]
         elif value == 'sqft' and updates['sqft']:
             sqft = int(updates['sqft'])
-    if sqft > 0:    
+    if sqft > 0:
         mongo.db.rentals.update_one({'address':updates['address']}, {'$set' : {'user_update': user_updates, 'sqft': sqft}})
     else:
         mongo.db.rentals.update_one({'address':updates['address']}, {'$set' : {'user_update': user_updates}})
-    
+
     if not session.get("compare") is None:
         for listing in session['compare']:
             if listing['address'] == updates['address']:
@@ -257,26 +254,25 @@ def update_properties():
 
 @app.route("/clean")
 def clean():
-    executable_path = {"executable_path": CHROMEDRIVER}
-    browser = Browser("chrome", **executable_path, headless=False)
+    browser = Browser("chrome", headless=False)
     rentals = list(mongo.db.rentals.find())
     deleted = 0
     for rental in rentals:
         if any(x in rental['address'].lower() for x in ['gresham','wilsonville','sherwood', 'beaverton', 'tigard', 'oswego', 'hillsboro', 'aloha', 'happy valley', 'forest grove'] ):
             delete_listing(rental['link'])
             deleted += 1
-        else: 
+        else:
             if 'adjrent' in rental.keys() and rental['adjrent'] == 0:
                 delete_listing(rental['link'])
                 deleted += 1
-            else: 
+            else:
                 if any(b in rental['beds'] for b in ['1 bed', '1 bd']):
                     delete_listing(rental['link'])
                     deleted += 1
                 else:
                     browser.visit(rental['link'])
                     text = ["The page you are looking for can not be found","the listing you are trying to access is no longer available","this listing is no longer on the market"]
-                    for t in text: 
+                    for t in text:
                         present = browser.is_text_present(t, wait_time=1)
                         if present == True:
                             delete_listing(rental['link'])
@@ -284,7 +280,7 @@ def clean():
                             break
     print(f"{deleted} deleted")
     return redirect("/", code=302)
-    
+
 @app.route("/saved", methods=['GET', 'POST'])
 def saved_properties():
     updates = request.form
@@ -307,7 +303,7 @@ def toggle_save():
         if 'save' in current.keys():
             if current['save']:
                 saved = False
-            else: 
+            else:
                 saved = True
         else:
             saved = True
@@ -323,4 +319,4 @@ def delete_many():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

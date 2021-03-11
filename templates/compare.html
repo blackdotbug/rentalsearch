@@ -25,7 +25,7 @@
     <div class="header text-center">
         <a href="/"><h1>Heather's Cat Friendly 2+ Bedroom Portland Rental Search</h1></a>
     </div>
-    
+
     <div class="row">
       <div class="col-md-8">
         <h4>Comparing {{compare|length}} Listings</h4>
@@ -64,17 +64,17 @@
           <input class="form-text-input" type="number" name="rent" id="rent">
           <input type="hidden" name="address" id="address" value="" />
           <input type="hidden" name="listings" id="listings" value='{{compare|tojson}}' />
-          <button type="submit" class="btn btn-primary float-right">Update Property</button>
+          <button type="submit" class="btn btn-primary">Update Property</button>
         </form>
       </div>
     </div>
   </div>
   <script>
     var map = L.map('map').setView([45.523064, -122.676483], 10)
-    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 20,
-        id: "mapbox.streets",
+        id: "mapbox/streets-v11",
         accessToken: "{{accesstoken}}"
     }).addTo(map);
     {% for listing in compare %}
@@ -94,7 +94,7 @@
       if (listing['user_update']){
         Object.entries(listing['user_update']).forEach(function([key, value]) {
           document.getElementById(value).checked = true;
-        }); 
+        });
       }
       if (listing['sqft']){
         document.getElementById('sqft').value = listing['sqft'];
@@ -105,7 +105,7 @@
       var sidebar = document.getElementById("sidebar");
       sidebar.innerHTML = '<img src='+listing['img']+' style="max-width:300px" />'+
                           '<a href="'+listing['link']+'"><h3>'+listing['address']+'</h3></a>';
-      if (listing['adjrent']){ 
+      if (listing['adjrent']){
         sidebar.innerHTML += '<p>$'+listing['adjrent']+'/$'+listing['movein']+'</p>';
       }
       else { sidebar.innerHTML += '<p>$'+listing['rent']+'</p>'; }
@@ -134,7 +134,7 @@
       {% endfor %}
     });
   </script>
-  
+
 </body>
 
 </html>
