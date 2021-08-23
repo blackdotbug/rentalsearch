@@ -11,7 +11,9 @@ import re
 import scrape_properties
 from config import accessToken, SECRETKEY, MONGOURI, SESSTYPE, MONGODB, ENV
 import sys
+from webdriver_manager.chrome import ChromeDriverManager
 
+executable_path = {'executable_path': ChromeDriverManager().install()}
 sys.setrecursionlimit(8000)
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -48,7 +50,7 @@ def scrape():
     rentals = mongo.db.rentals
     scrapes = mongo.db.scrape_log
     now = datetime.datetime.now()
-    rental_data,scrape_stats = scrape_properties.scrape_all()
+    rental_data,scrape_stats = scrape_properties.scrape_all(executable_path)
     for address, rental in rental_data.items():
         if rental['address']:
             current = rentals.find_one({"address":address})
@@ -73,7 +75,7 @@ def scrape_one():
     scrapes = mongo.db.scrape_log
     now = datetime.datetime.now()
     link = request.args.get('url')
-    rental_data, scrape_stats = scrape_properties.scrape_all(link)
+    rental_data, scrape_stats = scrape_properties.scrape_all(executable_path, link)
     for address, rental in rental_data.items():
         if rental['address']:
             current = rentals.find_one({"address":address})
@@ -116,7 +118,7 @@ def calculate():
     return render_template("calculate.html", calculate=rentals)
 
 def scrape_numbers(rental_urls):
-    browser = Browser("chrome", headless=True)
+    browser = Browser("chrome", **executable_path, headless=True)
     listings_numbers = {}
     for url in rental_urls:
         browser.visit(url)
@@ -144,6 +146,7 @@ def scrape_numbers(rental_urls):
                     styled_number = re.sub(rf'\b{word}\b', f'<b>{word}</b>', styled_number, flags=re.IGNORECASE)
             deduped_numbers[i] = styled_number.strip()
         listings_numbers[url] = deduped_numbers
+    browser.quit()
     for listing in listings_numbers.keys():
         if listing in deleted:
             listings_numbers.pop(listing)
@@ -180,12 +183,13 @@ def delete_listing(url):
     mongo.db.rentals.delete_one({'link':url})
 
 def get_sqft(url):
-    browser = Browser("chrome", headless=True)
+    browser = Browser("chrome", **executable_path, headless=True)
     browser.visit(url)
-    text = ['sqft', 'sq. ft.', 'sq ft', 'square footage', 'sq.ft.']
     html = browser.html
+    browser.quit()
     soup = BeautifulSoup(html, "html.parser")
     sqfts = []
+    text = ['sqft', 'sq. ft.', 'sq ft', 'square footage', 'sq.ft.']
     for tag in soup.descendants:
         if tag.string and '/>' not in tag.string and 'rtCommonProps' not in tag.string:
             for word in text:
@@ -194,7 +198,7 @@ def get_sqft(url):
     return sqfts
 
 def scrape_details(rental_urls):
-    browser = Browser("chrome", headless=True)
+    browser = Browser("chrome", **executable_path, headless=True)
     listings_details = {}
     for url in rental_urls:
         browser.visit(url)
@@ -222,6 +226,7 @@ def scrape_details(rental_urls):
                     styled_detail = re.sub(rf'\b{word}\b', f'<b>{word}</b>', styled_detail, flags=re.IGNORECASE)
             deduped_details[i] = styled_detail
         listings_details[url] = deduped_details
+    browser.quit()
     for listing in listings_details.keys():
         if listing in deleted:
             listings_details.pop(listing)
@@ -254,7 +259,7 @@ def update_properties():
 
 @app.route("/clean")
 def clean():
-    browser = Browser("chrome", headless=False)
+    browser = Browser("chrome", **executable_path, headless=False)
     rentals = list(mongo.db.rentals.find())
     deleted = 0
     for rental in rentals:
@@ -279,6 +284,7 @@ def clean():
                             deleted += 1
                             break
     print(f"{deleted} deleted")
+    browser.quit()
     return redirect("/", code=302)
 
 @app.route("/saved", methods=['GET', 'POST'])

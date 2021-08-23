@@ -197,8 +197,8 @@ def scrape_site(site, browser):
             scrape_stats[site['base url']] = "something went wrong, site skipped"
         return rentals, scrape_stats
 
-def scrape_all(home_url = 'all'):
-    browser = Browser("chrome", headless=False)
+def scrape_all(executable_path, home_url = 'all'):
+    browser = Browser("chrome", **executable_path, headless=False)
 
     rentals = {}
 
