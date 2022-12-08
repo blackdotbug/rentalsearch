@@ -1,7 +1,7 @@
 beautifulsoup4 @ file:///home/linux1/recipes/ci/beautifulsoup4_1610988766420/work
 brotlipy==0.7.0
 cachelib==0.1.1
-certifi==2020.12.5
+certifi==2022.12.7
 cffi @ file:///opt/concourse/worker/volumes/live/48a8e59c-d46a-476e-668b-0a7bcc9c0827/volume/cffi_1613246931795/work
 chardet @ file:///opt/concourse/worker/volumes/live/8264bbc9-7371-481f-419c-a9d31a09238b/volume/chardet_1607706837238/work
 click @ file:///home/linux1/recipes/ci/click_1610990599742/work
